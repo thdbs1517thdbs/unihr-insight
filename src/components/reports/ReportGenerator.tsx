@@ -2,6 +2,7 @@
 
 import { useState, useTransition } from "react";
 import { generateHrReportDraft } from "@/app/reports/actions";
+import { ReportMarkdown } from "@/components/reports/ReportMarkdown";
 import { formatDateLabel } from "@/lib/analysis/format";
 import {
   REPORT_TONE_LABELS,
@@ -184,8 +185,8 @@ function ReportResult({ report }: { report: GeneratedReport }) {
           </button>
         </div>
       </div>
-      <div className="mt-4 whitespace-pre-wrap text-sm leading-6 text-slate-700">
-        {report.body}
+      <div className="mt-4">
+        <ReportMarkdown markdown={report.body} />
       </div>
       <p className="mt-4 text-xs text-muted">
         본 문서는 생성형 AI가 작성한 초안이며, 최종 제출 전 담당자의 검토가

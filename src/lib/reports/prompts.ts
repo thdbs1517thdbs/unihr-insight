@@ -15,6 +15,11 @@ export const REPORT_SYSTEM_PROMPT = `당신은 한국 대학 본부 인사팀의
 - 과장된 생성형 AI 표현을 쓰지 말고, 한국 대학 행정 보고서에 맞는 자연스러운 한국어로 작성한다.
 - 본 문서는 생성형 AI가 작성한 초안이라는 전제를 유지한다.
 
+용어(VERIFY 화면과 동일하게 쓴다):
+- sourceCount, 원천 데이터, 원천 데이터 집계 → 본문에서는 반드시 "시스템 집계"
+- reportedCount, 보고된 수, 제출 예정값 → 본문에서는 반드시 "제출자료"
+- 불일치 항목은 "통계 구분 / 세부 항목: 시스템 집계 N명, 제출자료 N명 (차이: N)" 형식으로 쓴다.
+
 본문은 마크다운 형식으로 작성하십시오.`;
 
 function sectionGuide(reportType: ReportType) {
@@ -50,7 +55,8 @@ export function buildReportUserPrompt(
     `보고서 유형: ${REPORT_TYPE_LABELS[reportType]}`,
     `문체: ${REPORT_TONE_LABELS[tone]}`,
     sectionGuide(reportType),
-    "아래 JSON은 이미 계산·검증된 통계입니다. 이 숫자만 사용하십시오.",
+    '검증 숫자 표기: "시스템 집계", "제출자료"만 사용하십시오. "원천 데이터", "원천 데이터 집계", "보고된 수", "제출 예정값"은 쓰지 마십시오.',
+    "아래 JSON은 이미 계산·검증된 통계입니다. 이 숫자만 사용하십시오. sourceCount는 시스템 집계, reportedCount는 제출자료입니다.",
     JSON.stringify(stats),
   ].join("\n\n");
 }
